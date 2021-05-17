@@ -14,7 +14,7 @@ public class GameOfLifeMain extends Application {
         Scene scene = new Scene(root);
         primaryStage.setTitle("Game of Life (GoL) KP230");
         primaryStage.setScene(scene);
-        primaryStage.setMinHeight(975);
+        primaryStage.setMinHeight(1000);
         primaryStage.setMinWidth(850);
         primaryStage.show();
     }

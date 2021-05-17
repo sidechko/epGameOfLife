@@ -52,7 +52,7 @@ public class Board {
         }
     }
 
-    public void nextStep(Rules rules){
+    public synchronized void nextStep(Rules rules){
         for(int h = 0; h <height;h++){
             for (int w = 0; w < width; w++) {
                 this.checkNeighbors(w,h,rules);
