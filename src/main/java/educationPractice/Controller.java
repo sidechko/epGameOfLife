@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
     public static Board mainBoard;
     public static GridPane Grid;
+    public static Rules mainRules = new Rules(2, 3);
 
     public Button STARTBUTTON;
     public TextField BWIDTH;
@@ -32,12 +33,23 @@ public class Controller implements Initializable {
     public TextField UPDATEPERIOD;
 
     public static boolean isStarted;
+    /**
+     * Параметры полученые из текста текстовых полей или слайдеров.
+     * bW - {@link Controller#BWIDTH};
+     * bH - {@link Controller#BHEIGHT};
+     * lCC - {@link Controller#LCC};
+     * scale - {@link Controller#SLIDER};
+     * period - {@link Controller#UPDATEPERIOD};
+     */
     static int bW;
     static int bH;
     static int lCC;
     static int scale;
     static int period;
-    public static Rules mainRules = new Rules(2, 3);
+
+    /**
+     * Массив прямоугольников, которые используються для выведения в Grid.
+     */
     public static Rectangle[][] rectangles;
     public static Thread thread;
 

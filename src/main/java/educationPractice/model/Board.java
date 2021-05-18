@@ -1,15 +1,32 @@
 package educationPractice.model;
 
 import java.util.Random;
-/***
+/**
  * Доска для отрисовки
  */
 public class Board {
+    /**
+     * Ширина доски
+     */
     public int width;
+    /**
+     * Высота доски
+     */
     public int height;
-    public boolean[][] tempCellsData;
+    /**
+     * Текущие состояник клеток
+     */
     public boolean[][] cellsData;
+    /**
+     * Следующие состояние клеток
+     */
+    public boolean[][] tempCellsData;
 
+    /**
+     * Конструктор для создания доски.
+     * @param width {@link Board#width}
+     * @param height {@link Board#height}
+     */
     public Board(int width, int height) {
         this.width = width;
         this.height = height;
@@ -32,6 +49,10 @@ public class Board {
         return sb.toString();
     }
 
+    /**
+     * Метод для обнуления состояния клеток доски.
+     * @param clearedData Состояние, которое мы хотим обнулить.
+     */
     public void clearData(boolean[][] clearedData){
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
@@ -40,6 +61,10 @@ public class Board {
         }
     }
 
+    /**
+     * Метод для случайного создания клеток на доске, в определенном количестве.
+     * @param countLivedCell количество клеток, которое хотим создать.
+     */
     public void generate(int countLivedCell){
         int x,y,i = 0;
         Random rnd = new Random();
@@ -52,6 +77,10 @@ public class Board {
         }
     }
 
+    /**
+     * Переход доски в следующие состояние.
+     * @param rules Правила по которым будет проверяться соседи клетки.
+     */
     public synchronized void nextStep(Rules rules){
         for(int h = 0; h <height;h++){
             for (int w = 0; w < width; w++) {
@@ -61,6 +90,12 @@ public class Board {
         this.migrateFromTemp();
     }
 
+    /**
+     * Провека соседий клетки, по правилу.
+     * @param i координаты клетки по x.
+     * @param j координаты клетки по y.
+     * @param rules Правило по которым проверяются соседи.
+     */
     public void checkNeighbors(int i, int j, Rules rules){
         int cLB = 0;
         try{
@@ -94,6 +129,9 @@ public class Board {
         else this.tempCellsData[i][j] = cLB == rules.forBirth;
     }
 
+    /**
+     * Перенос состояния клеток с {@link Board#tempCellsData} на {@link Board#cellsData}.
+     */
     public void migrateFromTemp(){
         for(int h = 0; h <height;h++){
             for (int w = 0; w < width; w++) {

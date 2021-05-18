@@ -1,10 +1,16 @@
 package educationPractice.model;
 
-/***
- * Правила для игры в жизнь
+/**
+ Правила для игры в жизнь
  */
 public class Rules {
+    /**
+     * Количество соседий для зарождения.
+     */
     int forBirth;
+    /**
+     * Количество соседий для сохранения.
+     */
     int forSafe;
 
     public Rules(int forSafe, int forBirth) {
