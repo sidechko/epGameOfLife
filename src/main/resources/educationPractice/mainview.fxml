@@ -45,9 +45,9 @@
       <Label text="Number of living cells" GridPane.rowIndex="2" />
       <Label text="Height" GridPane.rowIndex="1" />
       <Label text="Width" />
-      <TextField fx:id="BWIDTH" text="100" GridPane.columnIndex="1" />
-      <TextField fx:id="BHEIGHT" text="100" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <TextField fx:id="LCC" text="2500" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="BWIDTH" text="50" GridPane.columnIndex="1" />
+      <TextField fx:id="BHEIGHT" text="50" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="LCC" text="500" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Label text="Zoom" GridPane.rowIndex="4" />
       <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <TextField fx:id="UPDATEPERIOD" text="50" />

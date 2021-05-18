@@ -51,7 +51,16 @@ public class Controller implements Initializable {
      * Массив прямоугольников, которые используються для выведения в Grid.
      */
     public static Rectangle[][] rectangles;
-    public static Thread thread;
+    public static Thread thread = new Thread(() -> {
+        while(isStarted){
+            try {
+                Thread.sleep(period);
+                new Controller().stepper();
+                if(!isStarted) return;
+            } catch (Exception ignored) {
+            }
+        }
+    });
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -110,16 +119,6 @@ public class Controller implements Initializable {
         this.STARTBUTTON.setText(buttonText);
         this.STARTBUTTON.setStyle(buttonStyle);
 
-        thread = new Thread(() -> {
-            while(isStarted){
-                try {
-                    Thread.sleep(period);
-                    stepper();
-                } catch (Exception ignored) {
-                }
-            }
-        });
-
         if(!isStarted) thread.stop();
         else thread.start();
     }
@@ -128,11 +127,11 @@ public class Controller implements Initializable {
      * Метод для изменения цвета всех элементов {@link Controller#rectangles} изходя из {@link Controller#mainBoard}
      */
     public void reloadRectangles() {
-        for (int h = 0; h < bH; h++) {
-            for (int w = 0; w < bW; w++) {
-                String fill = mainBoard.cellsData[w][h] ? "#a5ffa1" : "#111111";
-                rectangles[w][h].setFill(Paint.valueOf(fill));
-            }
+        for (Node node: Grid.getChildren()) {
+            int w = GridPane.getRowIndex(node);
+            int h = GridPane.getColumnIndex(node);
+            String fill = mainBoard.cellsData[w][h] ? "#a5ffa1" : "#111111";
+            ((Rectangle)node).setFill(Paint.valueOf(fill));
         }
     }
 
