@@ -18,8 +18,6 @@ import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Controller implements Initializable {
     public static Board mainBoard;
@@ -57,9 +55,7 @@ public class Controller implements Initializable {
         bW = Integer.parseInt(BWIDTH.getText());
         bH = Integer.parseInt(BHEIGHT.getText());
         lCC = Integer.parseInt(LCC.getText());
-        System.out.println(period);
         period = Integer.parseInt(UPDATEPERIOD.getText());
-        System.out.println(period);
         getScale();
 
         mainBoard = new Board(bW, bH);
