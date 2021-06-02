@@ -1,6 +1,9 @@
 package educationPractice.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
 /**
  * Доска для отрисовки
  */
@@ -87,7 +90,17 @@ public class Board {
                 this.checkNeighbors(w,h,rules);
             }
         }
+    }
+
+    public ArrayList<int[]> getDifference(){
+        ArrayList<int[]> defList = new ArrayList<>();
+        for(int h = 0; h <height;h++){
+            for (int w = 0; w < width; w++) {
+                if(this.cellsData[w][h]^this.tempCellsData[w][h]) defList.add(new int[]{w,h});
+            }
+        }
         this.migrateFromTemp();
+        return defList;
     }
 
     /**

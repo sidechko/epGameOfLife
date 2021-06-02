@@ -17,12 +17,14 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     public static Board mainBoard;
     public static GridPane Grid;
     public static Rules mainRules = new Rules(2, 3);
+    public static ArrayList<int[]> defList;
 
     public Button STARTBUTTON;
     public TextField BWIDTH;
@@ -51,16 +53,7 @@ public class Controller implements Initializable {
      * Массив прямоугольников, которые используються для выведения в Grid.
      */
     public static Rectangle[][] rectangles;
-    public static Thread thread = new Thread(() -> {
-        while(isStarted){
-            try {
-                Thread.sleep(period);
-                new Controller().stepper();
-                if(!isStarted) return;
-            } catch (Exception ignored) {
-            }
-        }
-    });
+    public static Thread thread;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -85,7 +78,7 @@ public class Controller implements Initializable {
         rectangles = new Rectangle[bW][bH];
         Grid = newGridPane();
         generateGrid(Grid);
-        reloadRectangles();
+        loadRectangles();
 
         SCROLLPANEL.setContent(Grid);
     }
@@ -103,6 +96,7 @@ public class Controller implements Initializable {
      */
     public void stepper() {
         mainBoard.nextStep(mainRules);
+        defList = mainBoard.getDifference();
         reloadRectangles();
     }
 
@@ -119,14 +113,30 @@ public class Controller implements Initializable {
         this.STARTBUTTON.setText(buttonText);
         this.STARTBUTTON.setStyle(buttonStyle);
 
-        if(!isStarted) thread.stop();
-        else thread.start();
+        if(isStarted) {thread = new Thread(() -> {
+            while(isStarted){
+                try {
+                    Thread.sleep(period);
+                    new Controller().stepper();
+                    if(!isStarted) return;
+                } catch (Exception ignored) {
+                }
+            }
+        });
+        thread.start();}
     }
 
     /**
      * Метод для изменения цвета всех элементов {@link Controller#rectangles} изходя из {@link Controller#mainBoard}
      */
-    public void reloadRectangles() {
+    public void reloadRectangles(){
+        for (int[] coord: defList) {
+            String fill = mainBoard.cellsData[coord[0]][coord[1]] ? "#a5ffa1" : "#111111";
+            rectangles[coord[0]][coord[1]].setFill(Paint.valueOf(fill));
+        }
+    }
+
+    public void loadRectangles() {
         for (Node node: Grid.getChildren()) {
             int w = GridPane.getRowIndex(node);
             int h = GridPane.getColumnIndex(node);
